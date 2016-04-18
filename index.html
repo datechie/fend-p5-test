@@ -7,15 +7,42 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Umang's Neighborhood Map</title>
 		<!-- <link href='http://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'> -->
-		<link rel="stylesheet" href="css/normalize.css">	
-		<link rel="stylesheet" href="css/bootstrap.css">
+		<!--<link rel="stylesheet" href="css/normalize.css">	-->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+    	<link href="css/style.css" rel="stylesheet">		
 		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<!--<script type="text/javascript" src="js/bootstrap.min.js"></script> -->
+		<script src="js/app.js"></script>
+		<script src="js/map.js"></script>	
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&libraries=places"></script>
+		<!--<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=initializeMap">
+    </script> -->			
 	</head>
 	<body>
-		<script src="js/jquery-1.11.3.min.js"></script>
-		<script src="js/knockout-3.4.0.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/map.js"></script>		
+		<a href="#mapDiv">Locations</a>
+		<div id="mapDiv">
+    		<h2>Cities in Alameda County, California</h2>
+		</div>
+		<script type="text/javascript">
+      // Notice how all of a sudden there's JavaScript inside this HTML
+      // document? You can write JavaScript between <script> tags. At the end of your
+      // JavaScript, don't forget the closing script tag with the slash (/).
+
+
+      // Also, this is a JavaScript style comment. You can comment in JavaScript with:
+
+      //   two slashes for all following characters on a single line, or
+
+      /*
+          an opening and closing set of slash asterisks for block comments.
+      */
+
+      //if(document.getElementById('map') === null) {
+      //  document.getElementById('mapDiv').style.display = 'none';
+      //}
+      $("#mapDiv").append(googleMap);
+      $("#mapDiv").append("<h2>My MAP</h2>");
+    </script>    		
 	</body>
 </html>
