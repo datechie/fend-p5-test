@@ -12,7 +12,7 @@ $("#mapDiv").append("<h1>My MAP</h1>");
 /*
 Start here! initializeMap() is called when page is loaded.
 */
-function initializeMap() 
+function initializeMap()
 {
 
   var locations;
@@ -135,7 +135,7 @@ function initializeMap()
 
   // locations is an array of location strings returned from locationFinder()
   //locations = locationFinder();
-  locations = ["Fremont, CA", "Oakland, CA", "Union City, CA", "Pleasanton, CA", "Dublin, CA"];
+  locations = ["Fremont, CA", "Oakland, CA", "Pleasanton, CA", "Dublin, CA", "Livermore, CA"];
 
   // pinPoster(locations) creates pins on the map for each location in
   // the locations array
