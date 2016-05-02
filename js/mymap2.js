@@ -17,11 +17,11 @@ function ViewModel (){
 			marker: null
 		},
 		{
-			name: "Sala Thai",
+			name: "Le Moose Crepe Cafe",
 //			street: "39170 State Street",
 			city: "Fremont",
 			state: "CA",
-			position: {lat:  37.561213, lng: -121.999914},
+			position: {lat:  37.536083, lng: -121.998373},
 			marker: null
 		},
 		{
@@ -195,23 +195,21 @@ function yelpInfo (loc, map) {
         'jsonpCallback' : 'cb',
 		'success' : function(data) {
 			console.log("Name is " + data.businesses[0].name);
-			//contentString = '<div id="content">' +
 			contentString =
             	'<div class="infoWindow"><h1 class="infoWindowTitle">' + data.businesses[0].name + '</h1>' +
             	'<h4><strong>Details:</strong></h4>' +
 				'<ul><li><h4>Rating: ' +
             	'<img src="' + data.businesses[0].rating_img_url + '"</h4></li>' +
             	'<li><h4> Phone: <br/>' + data.businesses[0].display_phone + '</h4></li>' +
-            	'<li><h4> Address: <br/>' + data.businesses[0].location.display_address[0] + '<br/>' +
-            	data.businesses[0].location.display_address[1] + '</h4></li></ul>' +
+            	'<li><h4> Address: <br/>' + data.businesses[0].location.display_address.join('<br/>') +
+    			'</h4></li></ul>' +
             	'</div>';
             // We now set the infoWindow content
   			infoLoc.setContent(contentString);
 			infoLoc.open(map, loc.marker);
         },
-        error: function () {
-			console.log("Error getting data from yelp API");
-			alert("Error getting data from yelp API");
+        error: function (error) {
+			console.log("Error getting data from yelp API: " + error);
 		}
     });
 }
