@@ -21,10 +21,33 @@
 
 	</head>
 	<body>
-		<h2>Thai Restaurants</h2>
+		<header>
+			<h1>Thai Restaurants</h1>
+		</header>
+		<nav>
+			<div id="reslist"></div>
+			<article>
+               <div class="row">
+                    <div class="col-md-12">
+                        <!--<input placeholder="Search…" type="search" name="q" data-bind="value: searchFilter, valueUpdate: 'keyup'" placeholder="Filter..." autocomplete="on" /> -->
+    					<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter..." autocomplete="on" id="searchFilter" />
+                    </div>
+                </div
+   				<div class="list-container">
+        	        <h3 id="list-header">Places</h3>
+                    <ul data-bind="foreach: filterPlaces">
+                        <li>
+                            <strong  data-bind="text: name, click: $parent.showPlace"></strong>
+                        </li>
+                    </ul>
+                </div>
+			</article>
+		</nav>
+
+
 		<div id="map"></div>
 		<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script>-->
 		<script src="js/mymap2.js"></script>
-		<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script> -->
+		<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script>-->
 	</body>
 </html>

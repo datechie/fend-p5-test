@@ -69,10 +69,10 @@ function ViewModel (){
 					draggable: true,
 					animation: google.maps.Animation.DROP
 				});
-				marker.addListener('click',  toggleBounce);
-				marker.addListener('click',  function(temp){
+				marker.addListener('click',  toggleBounce(temp));
+				/*marker.addListener('click',  function(temp){
 					yelpInfo(temp, map);
-				});
+				});*/
 
         /*marker.addListener('click', function() {
     			//var marker = this;
@@ -125,7 +125,7 @@ function ViewModel (){
             });
         })*/
 
-		function toggleBounce() {
+		function toggleBounce(loc) {
 			var marker = this;
 		  if (marker.getAnimation() !== null) {
 		    marker.setAnimation(null);
@@ -135,7 +135,7 @@ function ViewModel (){
 		          marker.setAnimation(null);
 		      }, 2000);
 		  	}
-				//yelpInfo(loc, map);
+				yelpInfo(loc, map);
 			}
 
 	}
