@@ -29,12 +29,11 @@
 			<article>
                <div class="row">
                     <div class="col-md-12">
-                        <!--<input placeholder="Search…" type="search" name="q" data-bind="value: searchFilter, valueUpdate: 'keyup'" placeholder="Filter..." autocomplete="on" /> -->
-    					<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter..." autocomplete="on" id="searchFilter" />
+    					<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Places" autocomplete="on" id="searchFilter" />
                     </div>
                 </div
    				<div class="list-container">
-        	        <h3 id="list-header">Places</h3>
+
                     <ul data-bind="foreach: filterPlaces">
                         <li>
                             <strong  data-bind="text: name, click: $parent.showPlace"></strong>
@@ -46,6 +45,20 @@
 
 
 		<div id="map"></div>
+			<!-- <div id="search-container" class="collapse navbar-collapse">
+				<div id="search-nav" class="nav navbar-nav">
+					<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Restaurants" autocomplete="on" id="searchFilter" />
+					<div id="scroller">
+						<div>
+		                    <ul data-bind="foreach: filterPlaces">
+		                        <li>
+		                            <strong  data-bind="text: name, click: $parent.showPlace"></strong>
+		                        </li>
+		                    </ul>
+						</div>
+					</div>
+				</div>
+			</div> -->
 		<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script>-->
 		<script src="js/mymap2.js"></script>
 		<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script>-->

@@ -1,7 +1,8 @@
 'use strict';
+// variable for the info window
 var infoLoc = new google.maps.InfoWindow({
-    content: "",
-    maxWidth: 200
+    content: ""
+    //maxWidth: 200
 });
 
 function ViewModel (){
@@ -10,7 +11,7 @@ function ViewModel (){
 		{
 			name: "Banh Thai Restaurant",
 //			street: "39060 Fremont Blvd",
-//			city: "Fremont",
+			city: "Fremont",
 			state: "CA",
 			position: {lat: 37.560621, lng: -121.990357},
 			marker: null
@@ -18,7 +19,7 @@ function ViewModel (){
 		{
 			name: "Sala Thai",
 //			street: "39170 State Street",
-//			city: "Fremont",
+			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.561213, lng: -121.999914},
 			marker: null
@@ -26,7 +27,7 @@ function ViewModel (){
 		{
 			name: "Green Champa Garden",
 //			street: "42318 Fremont Blvd",
-//			city: "Fremont",
+			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.540918, lng: -121.990357},
 			marker: null
@@ -34,7 +35,7 @@ function ViewModel (){
 		{
 			name: "Beyond Thai",
 //			street: "46535 Mission Blvd",
-//			city: "Fremont",
+			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.561213, lng: -121.999184},
 			marker: null
@@ -42,7 +43,7 @@ function ViewModel (){
 		{
 			name: "Chef Chai Thai Cuisine",
 //			street: "47894 Warm Springs Blvd",
-//			city: "Fremont",
+			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.526886, lng: -121.98499375},
 			marker: null
@@ -55,16 +56,20 @@ function ViewModel (){
 	// Initialize the Map
 	function initMap() {
 		// Latitude, Longitude for map center
-		var myLatLng = {lat: 37.529659, lng: -122.040240};
+		var myLatLng = {lat: 37.548606, lng: -121.988477};
 
 		var mapOptions = {
 			disableDefaultUI: true,
 			center: myLatLng,
 			scrollwheel: false,
-			zoom: 13
+			zoom: 14,
+			zoomControl: true,
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.RIGHT_BOTTOM
+			}
 		};
 
-		// Create a map object and specify the DOM element for display.
+		// Create a new map object and specify the DOM element for display.
 		map = new google.maps.Map(document.getElementById('map'), mapOptions);
 		var pointMarkers = []; //array to show the place Markers on the map
 
@@ -72,9 +77,6 @@ function ViewModel (){
 		// Create a marker and set its position.
 		for (var i = 0;i < self.restaurant().length; i++){
 				var tempRes = self.restaurant()[i];
-				//console.log("Temp name is " + tempRes.name);
-			//	debugger;
-
 				marker = new google.maps.Marker({
 					map: map,
 					position: new google.maps.LatLng(tempRes.position),
@@ -85,13 +87,11 @@ function ViewModel (){
 				});
 				// Add marker to our location
 				tempRes.marker = marker;
-
 				pointMarkers.push(marker);
 		}
 
 		// Display the markers
 	  	for (var i = 0; i < pointMarkers.length; i++) {
-	      	//pointMarkers[i].setMap(map);
 	      	pointMarkers[i].setVisible(true);
 	  	}
 
@@ -148,65 +148,72 @@ function ViewModel (){
 
 }
 
-function yelpInfo (loc, map){
-         	var auth = {
-                // My auth tokens.
-                consumerKey : "_QrOLPgd8nGC-tuNJcxtUA",
-                consumerSecret : "ndJTUrL82MqEYBsKSd0Wa_oQyOw",
-                accessToken : "c8U06Cl3cxLeNqHMvRsTalU6Q9NV8PXT",
-                accessTokenSecret : "Qcx4LmyTqaWZ8sUoZ1e10hqlqVs",
-                serviceProvider : {
-                    signatureMethod : "HMAC-SHA1"
-                }
-            };
+function yelpInfo (loc, map) {
+ 	var auth = {
+        // My auth tokens.
+        consumerKey : "_QrOLPgd8nGC-tuNJcxtUA",
+        consumerSecret : "ndJTUrL82MqEYBsKSd0Wa_oQyOw",
+        accessToken : "c8U06Cl3cxLeNqHMvRsTalU6Q9NV8PXT",
+        accessTokenSecret : "Qcx4LmyTqaWZ8sUoZ1e10hqlqVs",
+        serviceProvider : {
+            signatureMethod : "HMAC-SHA1"
+        }
+    };
 
-            var terms = loc.name;
-            var near = loc.city;
-            console.log("terms is " + terms);
-            var accessor = {
-                consumerSecret : auth.consumerSecret,
-                tokenSecret : auth.accessTokenSecret
-            };
-            var parameters = [];
-            parameters.push(['term', terms]);
-            parameters.push(['location', near]);
-            parameters.push(['callback', 'cb']);
-            parameters.push(['oauth_consumer_key', auth.consumerKey]);
-            parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
-            parameters.push(['oauth_token', auth.accessToken]);
-            parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+    var terms = loc.name;
+    var near = loc.city;
+    console.log("terms is " + terms);
+    var accessor = {
+        consumerSecret : auth.consumerSecret,
+        tokenSecret : auth.accessTokenSecret
+    };
+    var parameters = [];
+    parameters.push(['term', terms]);
+    parameters.push(['location', near]);
+    parameters.push(['callback', 'cb']);
+    parameters.push(['oauth_consumer_key', auth.consumerKey]);
+    parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
+    parameters.push(['oauth_token', auth.accessToken]);
+    parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
 
-            var message = {
-                'action' : 'http://api.yelp.com/v2/search',
-                'method' : 'GET',
-                'parameters' : parameters
-            };
+    var message = {
+        'action' : 'http://api.yelp.com/v2/search',
+        'method' : 'GET',
+        'parameters' : parameters
+    };
 
-            OAuth.setTimestampAndNonce(message);
-            OAuth.SignatureMethod.sign(message, accessor);
+    OAuth.setTimestampAndNonce(message);
+    OAuth.SignatureMethod.sign(message, accessor);
 
-            var parameterMap = OAuth.getParameterMap(message.parameters);
-            var contentString;
+    var parameterMap = OAuth.getParameterMap(message.parameters);
+    var contentString;
 
-            $.ajax({
-                'url' : message.action,
-                'data' : parameterMap,
-                'dataType' : 'jsonp',
-                'jsonpCallback' : 'cb',
-				'success' : function(data) {
-    				contentString = '<div id="content">' +
-                    	'<h1>' + data.businesses[0].name + '</h1>' +
-                    	'<h3> Rating: <img src="' + data.businesses[0].rating_img_url + '"</h3>' +
-                    	'<h3> Phone: ' + data.businesses[0].phone + '</h3>' +
-                    	'<h3> Address: ' + data.businesses[0].location.display_address + '</h3>' +
-                    	'</div>';
-                    // We now set the infoWindow content
-          			infoLoc.setContent(contentString);
-					infoLoc.open(map, loc.marker);
-                },
-                error: function () {
-        			console.log("Error getting data from yelp API");
-        		}
-            });
+    $.ajax({
+        'url' : message.action,
+        'data' : parameterMap,
+        'dataType' : 'jsonp',
+        'jsonpCallback' : 'cb',
+		'success' : function(data) {
+			console.log("Name is " + data.businesses[0].name);
+			//contentString = '<div id="content">' +
+			contentString =
+            	'<div class="infoWindow"><h1 class="infoWindowTitle">' + data.businesses[0].name + '</h1>' +
+            	'<h4><strong>Details:</strong></h4>' +
+				'<ul><li><h4>Rating: ' +
+            	'<img src="' + data.businesses[0].rating_img_url + '"</h4></li>' +
+            	'<li><h4> Phone: <br/>' + data.businesses[0].display_phone + '</h4></li>' +
+            	'<li><h4> Address: <br/>' + data.businesses[0].location.display_address[0] + '<br/>' +
+            	data.businesses[0].location.display_address[1] + '</h4></li></ul>' +
+            	'</div>';
+            // We now set the infoWindow content
+  			infoLoc.setContent(contentString);
+			infoLoc.open(map, loc.marker);
+        },
+        error: function () {
+			console.log("Error getting data from yelp API");
+			alert("Error getting data from yelp API");
+		}
+    });
 }
+
 ko.applyBindings(new ViewModel());
