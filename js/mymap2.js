@@ -80,7 +80,8 @@ function ViewModel (){
 					position: new google.maps.LatLng(tempRes.position),
 					title: tempRes.name,
 					draggable: true,
-					animation: google.maps.Animation.DROP
+					animation: google.maps.Animation.DROP,
+					icon: 'images/thai.png' // icon gotten from https://mapicons.mapsmarker.com
 				});
 				// Add marker to our location
 				tempRes.marker = marker;
