@@ -1,8 +1,6 @@
 'use strict';
 // global variable for the info window
-var infoLoc = new google.maps.InfoWindow({
-    content: ""
-});
+var infoLoc;
 
 // Define the ViewModel
 function ViewModel (){
@@ -68,10 +66,16 @@ function ViewModel (){
 
 		// Create a new map object and specify the DOM element for display.
 		map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+		// We define the infoLoc to be used later with the infoWindow
+		infoLoc = new google.maps.InfoWindow({
+    		content: ""
+		});
+
 		var pointMarkers = []; //array to show the place Markers on the map
 
 		// Create a marker and set its position.
-		for (var i = 0;i < self.restaurant().length; i++){
+		for (var i = 0;i < self.restaurant().length; i++) {
 				var tempRes = self.restaurant()[i]; // Defining a temp variable to get each value and then use it below
 				marker = new google.maps.Marker({
 					map: map,
@@ -204,6 +208,6 @@ function yelpInfo (loc, map)
 
 }
 
-function initialize(){
+function initialize() {
 	ko.applyBindings(new ViewModel());
 }
