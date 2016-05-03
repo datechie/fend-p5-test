@@ -1,4 +1,4 @@
-html, body { height: 100%; margin: 0; padding: 0; }
+/*html, body { height: 100%; margin: 0; padding: 0; }
 section {
     width:350px;
     float:left;
@@ -10,7 +10,7 @@ header {
     text-align:center;
     padding:5px;
 }
-/*nav {
+nav {
     line-height:30px;
     background-color:#eeeeee;
     height: 100%;
@@ -18,6 +18,40 @@ header {
     float:left;
     padding:5px;
 }*/
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif;
+	color: #4D4D4D;
+}
+
+
+header{
+	background-color: #ffff00;
+}
+.navbar-inverse {
+	background-color: #ffffff;
+	padding: 10px;
+	border-bottom: 10px solid #4D4D4D;
+}
+
+
+.navbar-inverse .navbar-toggle {
+	border-color: #4D4D4D;
+}
+
+
+.navbar-collapse {
+	padding-right: 0px;
+}
+
+
+.navbar-inverse .navbar-toggle .icon-bar {
+	background-color: #FF9C00;
+}
+
 
 #map {
 	/*float: right;*/
@@ -59,7 +93,7 @@ header {
 	min-height: 653px;*/
 	height: 100%;
 	width: 15%;
-	right: 0px;
+	: 0px;
 }
 
 
@@ -87,9 +121,9 @@ header {
 }
 
 
-#scroller div div div a:visited {
+/*#scroller div div div a:visited {
 	color: #FF9C00;
-}
+}*/
 
 .infoWindow {
 	width: 250px !important;
@@ -117,10 +151,6 @@ header {
 	font-size: 12px;
 }
 
-.bulletLabel {
-	color:  #48b5e9;
-	font-weight: bold;
-}
 
 @media (min-width: 1200px) {
 	.col-lg-3 {
@@ -135,7 +165,7 @@ header {
 
 
 	.infoWindow {
-		width: 300px !important;
+		width: 200px;
 		min-height: 300px;
 		max-height: 300px;
 		height: 300px;
@@ -143,12 +173,6 @@ header {
 		overflow-x: hidden;
 		border-radius: 10px 10px 0 0;
 	}
-
-
-	.navbar-header img {
-		width: 120px;
-	}
-
 
 }
 

@@ -6,10 +6,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Umang's Neighborhood Map</title>
-		<!-- <link href='http://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'> -->
 		<!--<link rel="stylesheet" href="css/normalize.css">	-->
 		<link rel="stylesheet" href="css/bootstrap.min.css">
-    	<link href="css/mystyle.css" rel="stylesheet">
+    	<link rel="stylesheet" href="css/mystyle.css">
 		<script type="text/javascript" src="js/knockout-3.4.0.js"></script>
 		<!--<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>-->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -17,35 +16,53 @@
         <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA"></script>
 		<!--<script type="text/javascript" src="js/bootstrap.min.js"></script> -->
-
-
 	</head>
+
 	<body>
 		<header>
-			<h1>Thai Restaurants</h1>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+				<h1>Thai Restaurants</h1>
+			</div>
 		</header>
-		<nav>
-			<div id="reslist"></div>
-			<article>
+		<!--<nav>
+		<article>
+			<div class="container">
                <div class="row">
-                    <div class="col-md-12">
-    					<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Places" autocomplete="on" id="searchFilter" />
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    	<div class = "input-group">
+                    		<span class="input-group-addon">
+    							<input type="text" class="form-control" data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Places" autocomplete="on" id="searchFilter" />
+                    		</span>
+                    	</div>
+    					/*<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Places" autocomplete="on" id="searchFilter" />*/
+	                    <ul data-bind="foreach: filterPlaces">
+	                        <li>
+	                            <strong  data-bind="text: name, click: $parent.showPlace"></strong>
+	                        </li>
+	                    </ul>
                     </div>
-                </div
-   				<div class="list-container">
-
-                    <ul data-bind="foreach: filterPlaces">
-                        <li>
-                            <strong  data-bind="text: name, click: $parent.showPlace"></strong>
-                        </li>
-                    </ul>
                 </div>
-			</article>
-		</nav>
+   				/*<div class="list-container">-->
+	                <!--<div class="col-md-4 col-sm-4 col-xs-4">
+	                    <ul data-bind="foreach: filterPlaces">
+	                        <li>
+	                            <strong  data-bind="text: name, click: $parent.showPlace"></strong>
+	                        </li>
+	                    </ul>
+	                </div>*/
+                	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                		<div id="map" style="width:100%; height: 400px;">
+                		</div>
+                	</div>
+                </div>
+			</div>
+		</article>
+		</nav>-->
 
 
-		<div id="map"></div>
-			<!-- <div id="search-container" class="collapse navbar-collapse">
+		<!--<div class="col-md-8 col-sm-8 col-xs-8" id="map"></div>-->
+		<div id = "map"></div>
+			<div id="search-container" class="collapse navbar-collapse">
 				<div id="search-nav" class="nav navbar-nav">
 					<input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Restaurants" autocomplete="on" id="searchFilter" />
 					<div id="scroller">
@@ -58,9 +75,9 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script>-->
-		<script src="js/mymap2.js"></script>
+		<script type="text/javascript" src="js/mymap2.js"></script>
 		<!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=ViewModel" async defer></script>-->
 	</body>
 </html>

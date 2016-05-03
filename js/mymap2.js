@@ -1,16 +1,16 @@
 'use strict';
-// variable for the info window
+// global variable for the info window
 var infoLoc = new google.maps.InfoWindow({
     content: ""
-    //maxWidth: 200
 });
 
+// Define the ViewModel
 function ViewModel (){
 	var self = this;
+	// 5 Default Thai Restaurant Details
 	self.thaiRestaurants = [
 		{
 			name: "Banh Thai Restaurant",
-//			street: "39060 Fremont Blvd",
 			city: "Fremont",
 			state: "CA",
 			position: {lat: 37.560621, lng: -121.990357},
@@ -18,7 +18,6 @@ function ViewModel (){
 		},
 		{
 			name: "Le Moose Crepe Cafe",
-//			street: "39170 State Street",
 			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.536083, lng: -121.998373},
@@ -26,7 +25,6 @@ function ViewModel (){
 		},
 		{
 			name: "Green Champa Garden",
-//			street: "42318 Fremont Blvd",
 			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.540918, lng: -121.990357},
@@ -34,7 +32,6 @@ function ViewModel (){
 		},
 		{
 			name: "Beyond Thai",
-//			street: "46535 Mission Blvd",
 			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.561213, lng: -121.999184},
@@ -42,7 +39,6 @@ function ViewModel (){
 		},
 		{
 			name: "Chef Chai Thai Cuisine",
-//			street: "47894 Warm Springs Blvd",
 			city: "Fremont",
 			state: "CA",
 			position: {lat:  37.526886, lng: -121.98499375},
@@ -58,6 +54,7 @@ function ViewModel (){
 		// Latitude, Longitude for map center
 		var myLatLng = {lat: 37.548606, lng: -121.988477};
 
+		// Additional map options
 		var mapOptions = {
 			disableDefaultUI: true,
 			center: myLatLng,
@@ -73,10 +70,9 @@ function ViewModel (){
 		map = new google.maps.Map(document.getElementById('map'), mapOptions);
 		var pointMarkers = []; //array to show the place Markers on the map
 
-
 		// Create a marker and set its position.
 		for (var i = 0;i < self.restaurant().length; i++){
-				var tempRes = self.restaurant()[i];
+				var tempRes = self.restaurant()[i]; // Defining a temp variable to get each value and then use it below
 				marker = new google.maps.Marker({
 					map: map,
 					position: new google.maps.LatLng(tempRes.position),
@@ -95,10 +91,10 @@ function ViewModel (){
 	      	pointMarkers[i].setVisible(true);
 	  	}
 
-		// We use this for the data binding and will be called below for the click listener
+		// We use this function for the data binding in the html and will also call it below for the click listener
 	    self.showPlace = function (loc) {
-                toggleBounce(loc.marker);
-                yelpInfo(loc, map);
+                toggleBounce(loc.marker); // bounce function call
+                yelpInfo(loc, map); // yelp api call function
 	    };
 
 	    // Add a click listener to the marker
@@ -129,10 +125,7 @@ function ViewModel (){
 	self.filterPlaces = ko.computed(function () {
         return ko.utils.arrayFilter(self.restaurant(), function (place) {
         	filter = self.searchFilter().toLowerCase();
-            //var isDisplay = place.name.toLowerCase().indexOf(filter) >= 0;
             var isDisplay = (place.name.toLowerCase().indexOf(filter)) >= 0 ? true : false;
-            console.log("Filter is " + filter);
-            console.log("Display is " + isDisplay);
             if (place.marker) {
                 if (isDisplay) {
                     place.marker.setVisible(true);
@@ -148,56 +141,48 @@ function ViewModel (){
 
 }
 
-function yelpInfo (loc, map) {
- 	var auth = {
-        // My auth tokens.
-        consumerKey : "_QrOLPgd8nGC-tuNJcxtUA",
-        consumerSecret : "ndJTUrL82MqEYBsKSd0Wa_oQyOw",
-        accessToken : "c8U06Cl3cxLeNqHMvRsTalU6Q9NV8PXT",
-        accessTokenSecret : "Qcx4LmyTqaWZ8sUoZ1e10hqlqVs",
-        serviceProvider : {
-            signatureMethod : "HMAC-SHA1"
-        }
-    };
+// Function to get restaurant details via the yelp API
+function yelpInfo (loc, map)
+{
+	// This is required with oauth
+	function nonce_generate() {
+		return (Math.floor(Math.random() * 1e12).toString());
+	}
 
-    var terms = loc.name;
-    var near = loc.city;
-    console.log("terms is " + terms);
-    var accessor = {
-        consumerSecret : auth.consumerSecret,
-        tokenSecret : auth.accessTokenSecret
-    };
-    var parameters = [];
-    parameters.push(['term', terms]);
-    parameters.push(['location', near]);
-    parameters.push(['callback', 'cb']);
-    parameters.push(['oauth_consumer_key', auth.consumerKey]);
-    parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
-    parameters.push(['oauth_token', auth.accessToken]);
-    parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+	var yelp_url = 'https://api.yelp.com/v2/search?';
 
-    var message = {
-        'action' : 'http://api.yelp.com/v2/search',
-        'method' : 'GET',
-        'parameters' : parameters
-    };
+	// Required parameters
+	var parameters = {
+		term: loc.name,
+		location: loc.city,
+		oauth_consumer_key: "_QrOLPgd8nGC-tuNJcxtUA",
+		oauth_token: "c8U06Cl3cxLeNqHMvRsTalU6Q9NV8PXT",
+		oauth_nonce: nonce_generate(),
+		oauth_timestamp: Math.floor(Date.now()/1000),
+		oauth_signature_method: 'HMAC-SHA1',
+		callback: 'cb'
+	};
 
-    OAuth.setTimestampAndNonce(message);
-    OAuth.SignatureMethod.sign(message, accessor);
+	var consumer_secret = "ndJTUrL82MqEYBsKSd0Wa_oQyOw",
+		token_secret = "Qcx4LmyTqaWZ8sUoZ1e10hqlqVs";
 
-    var parameterMap = OAuth.getParameterMap(message.parameters);
-    var contentString;
+	var encodedSignature = oauthSignature.generate('GET',yelp_url, parameters, consumer_secret, token_secret);
+	parameters.oauth_signature = encodedSignature;
 
-    $.ajax({
-        'url' : message.action,
-        'data' : parameterMap,
-        'dataType' : 'jsonp',
-        'jsonpCallback' : 'cb',
-		'success' : function(data) {
-			console.log("Name is " + data.businesses[0].name);
+	var contentString; // This variable will be used with the infoWindow function
+
+	var settings = {
+	    url: yelp_url,
+	    data: parameters,
+	    cache: true,
+	    dataType: 'jsonp',
+	    jsonpCallback: 'cb',
+	    success: function(data) {
+	      	// Now we create the content to display data in the info window using the results
+	      	// console.log("SUCCCESS! %o", data); /* This is for debugging to look at the returned data */
 			contentString =
             	'<div class="infoWindow"><h1 class="infoWindowTitle">' + data.businesses[0].name + '</h1>' +
-            	'<h4><strong>Details:</strong></h4>' +
+            	'<h4><strong>Restaurant Details From Yelp:</strong></h4>' +
 				'<ul><li><h4>Rating: ' +
             	'<img src="' + data.businesses[0].rating_img_url + '"</h4></li>' +
             	'<li><h4> Phone: <br/>' + data.businesses[0].display_phone + '</h4></li>' +
@@ -207,11 +192,18 @@ function yelpInfo (loc, map) {
             // We now set the infoWindow content
   			infoLoc.setContent(contentString);
 			infoLoc.open(map, loc.marker);
-        },
-        error: function (error) {
-			console.log("Error getting data from yelp API: " + error);
-		}
-    });
+	    },
+	    error: function(error) {
+			// On error we will display the error message in the console
+			console.log(error);
+	    }
+	};
+
+	// Send AJAX query via jQuery library.
+	$.ajax(settings);
+
 }
 
-ko.applyBindings(new ViewModel());
+function initialize(){
+	ko.applyBindings(new ViewModel());
+}
